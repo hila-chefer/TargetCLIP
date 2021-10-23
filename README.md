@@ -1,7 +1,7 @@
 # TargetCLIP- official pytorch implementation of the paper Image-Based CLIP-Guided Essence Transfer
 
 This repository finds a *global direction* in StyleGAN's space to edit images according to a target image.
-We transfer the style of a target image to any source image.
+We transfer the essence of a target image to any source image.
 
 ## Pretrained directions notebook:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hila-chefer/TargetCLIP/blob/main/TargetCLIP_CLIP_guided_image_essence_transfer.ipynb)
