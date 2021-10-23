@@ -33,3 +33,7 @@ We show that our method can transfer essence even for out of domain targets, suc
 <p align="center">
   <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/pocahontas.png">
 </p>
+
+
+### Credits
+The code in this repo draws from the [StyleCLIP](https://github.com/orpatashnik/StyleCLIP) code base. 
