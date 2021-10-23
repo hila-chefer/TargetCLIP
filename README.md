@@ -1,4 +1,4 @@
-# TargetCLIP
+# TargetCLIP- official pytorch implementation of the paper Image-Based CLIP-Guided Essence Transfer
 
 This repository finds a *global direction* in StyleGAN's space to edit images according to a target image.
 We transfer the style of a target image to any source image.
