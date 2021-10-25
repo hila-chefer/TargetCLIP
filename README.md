@@ -34,8 +34,5 @@ The targets are inverted images, and the latents are used as initialization for 
 </p>
 
 
-We show that our method can transfer essence even for out of domain targets, such as animated targets:
-
-
 ### Credits
 The code in this repo draws from the [StyleCLIP](https://github.com/orpatashnik/StyleCLIP) code base. 
