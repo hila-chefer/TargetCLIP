@@ -28,7 +28,7 @@ We show that our method can transfer essence even for out of domain targets, suc
 
 ### Elsa
 <p align="center">
-  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/elsa.png">
+  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Elsa.png">
 </p>
 
 ### Pocahontas
