@@ -33,7 +33,7 @@ We show that our method can transfer essence even for out of domain targets, suc
 
 ### Pocahontas
 <p align="center">
-  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/pocahontas.png">
+  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Pocahontas.png">
 </p>
 
 
