@@ -12,37 +12,29 @@ The notebook allows to use the directions on the sources presented in the exampl
 
 *NOTE: all the examples presented are available in our colab notebook. The recommended coefficient to use is between 0.5-1*
 
-### The Joker
-Transfering the semantic essence of The Joker to source images using our method's global direction:
-*NOTE: here we use relatively large coefficients- 0.9-1.3*
+### Targets that were not inverted- The Joker and Keanu Reeves 
+The targets are plain images, that were not inverted, the direction optimization is initialized at random.
+
+*NOTE: for the joker, we use relatively large coefficients- 0.9-1.3*
 <p align="center">
-  <img height=600 src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/joker.jpg">
+  <img height=600 src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/joker_keanu.jpg">
 </p>
 
-### Trump
-Transfering the semantic essence of Trump to source images using our method's global direction:
+### Out of domain targets- Elsa and Pocahontas
+The targets are plain images that are out of the domain StyleGAN was trained on, the direction optimization is initialized at random.
+<p align="center">
+  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/elsa_pocahontas.jpg">
+</p>
+
+
+### Targets that were inverted- Trump
+The targets are inverted images, and the latents are used as initialization for the optimization.
 <p align="center">
   <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Trump.png">
 </p>
 
-### Keanu Reeves 
-Transfering the semantic essence of Keanu Reeves to source images using our method's global direction:
-<p align="center">
-  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Keanu.png">
-</p>
-
 
 We show that our method can transfer essence even for out of domain targets, such as animated targets:
-
-### Elsa
-<p align="center">
-  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Elsa.png">
-</p>
-
-### Pocahontas
-<p align="center">
-  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Pocahontas.png">
-</p>
 
 
 ### Credits
