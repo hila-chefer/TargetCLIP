@@ -17,7 +17,7 @@ The targets are plain images, that were not inverted, the direction optimization
 
 *NOTE: for the joker, we use relatively large coefficients- 0.9-1.3*
 <p align="center">
-  <img height=600 src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/joker_keanu.jpg">
+  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/joker_keanu.jpg">
 </p>
 
 ### Out of domain targets- Elsa and Pocahontas
