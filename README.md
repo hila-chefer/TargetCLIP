@@ -20,7 +20,7 @@ Transfering the semantic essence of Trump to source images using our method's gl
 ### Keanu Reeves 
 Transfering the semantic essence of Keanu Reeves to source images using our method's global direction:
 <p align="center">
-  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/keanu.png">
+  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Keanu.png">
 </p>
 
 
