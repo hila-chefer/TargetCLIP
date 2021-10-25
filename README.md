@@ -6,6 +6,8 @@ We transfer the essence of a target image to any source image.
 ## Pretrained directions notebook:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hila-chefer/TargetCLIP/blob/main/TargetCLIP_CLIP_guided_image_essence_transfer.ipynb)
 
+The notebook allows to use the directions on the sources presented in the examples. In addition, there's an option to edit your own inverted images with the pretrained directions, by uploading your latent vector to the `dirs` folder.
+
 ## Examples:
 
 *NOTE: all the examples presented are available in our colab notebook. The recommended coefficient to use is between 0.5-1*
