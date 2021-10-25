@@ -11,6 +11,14 @@ The notebook allows to use the directions on the sources presented in the exampl
 ## Examples:
 
 *NOTE: all the examples presented are available in our colab notebook. The recommended coefficient to use is between 0.5-1*
+
+### The Joker
+Transfering the semantic essence of The Joker to source images using our method's global direction:
+*NOTE: here we use relatively large coefficients- 0.9-1.3*
+<p align="center">
+  <img height=600 src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/joker.jpg">
+</p>
+
 ### Trump
 Transfering the semantic essence of Trump to source images using our method's global direction:
 <p align="center">
