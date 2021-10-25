@@ -14,7 +14,7 @@ The notebook allows to use the directions on the sources presented in the exampl
 ### Trump
 Transfering the semantic essence of Trump to source images using our method's global direction:
 <p align="center">
-  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/trump.png">
+  <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Trump.png">
 </p>
 
 ### Keanu Reeves 
