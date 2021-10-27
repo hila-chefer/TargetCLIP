@@ -3,6 +3,12 @@
 This repository finds a *global direction* in StyleGAN's space to edit images according to a target image.
 We transfer the essence of a target image to any source image.
 
+## Pretrained directions notebook:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hila-chefer/TargetCLIP/blob/main/TargetCLIP_CLIP_guided_image_essence_transfer.ipynb)
+
+The notebook allows to use the directions on the sources presented in the examples. In addition, there's an option to edit your own inverted images with the pretrained directions, by uploading your latent vector to the `dirs` folder.
+We use images inverted by [e4e](https://github.com/omertov/encoder4editing).
+
 ## Updates:
 Pretrained directions added for Doc Brown (Back to the Future), Morgan Freeman, Beyonce, and Ariel (The Little Mermaid)!
 <p align="center">
@@ -12,11 +18,7 @@ Pretrained directions added for Doc Brown (Back to the Future), Morgan Freeman, 
   <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/ariel_beyonce.jpg">
 </p>
 
-## Pretrained directions notebook:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hila-chefer/TargetCLIP/blob/main/TargetCLIP_CLIP_guided_image_essence_transfer.ipynb)
 
-The notebook allows to use the directions on the sources presented in the examples. In addition, there's an option to edit your own inverted images with the pretrained directions, by uploading your latent vector to the `dirs` folder.
-We use images inverted by [e4e](https://github.com/omertov/encoder4editing).
 
 ## Examples:
 
