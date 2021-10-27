@@ -3,6 +3,15 @@
 This repository finds a *global direction* in StyleGAN's space to edit images according to a target image.
 We transfer the essence of a target image to any source image.
 
+## Updates:
+Pretrained directions added for Doc Brown (Back to the Future), Morgan Freeman, Beyonce, and Ariel (The Little Mermaid)!
+<p align="center">
+  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/doc_brown_morgan.jpg">
+</p>
+<p align="center">
+  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/ariel_beyonce.jpg">
+</p>
+
 ## Pretrained directions notebook:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hila-chefer/TargetCLIP/blob/main/TargetCLIP_CLIP_guided_image_essence_transfer.ipynb)
 
