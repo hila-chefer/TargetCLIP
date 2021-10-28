@@ -9,6 +9,37 @@ We transfer the essence of a target image to any source image.
 The notebook allows to use the directions on the sources presented in the examples. In addition, there's an option to edit your own inverted images with the pretrained directions, by uploading your latent vector to the `dirs` folder.
 We use images inverted by [e4e](https://github.com/omertov/encoder4editing).
 
+## Training new directions:
+To train new directions for your own targets, use the `find_dirs.py` script under the `optimization` folder.
+
+Our code supports both targets from an images the were **not inverted** and targets for inverted images. For example, our Elsa, The Joker, Pocahontas, Keanu Reeves, and more examples were not inverted, while our Trump example was inverted.
+When possible, an inverted target usually gives better results.
+
+We recommend to use inverted images for the training process. Our experiments use [the inverted latents from the StyleCLIP repo](https://drive.google.com/file/d/1j7RIfmrCoisxx3t-r-KC02Qc8barBecr/view).
+
+### Using targets that were not inverted
+The code uses `--num_directions` differnet random initializations for the essence vector. After training, you can choose your favorite one (usually, all are very similar).
+1. Download [the inverted latents from the StyleCLIP repo](https://drive.google.com/file/d/1j7RIfmrCoisxx3t-r-KC02Qc8barBecr/view) for training.
+2. Upload your target image to the `dirs/tragets` folder. Note that png images are not supported.
+3. Run the `find_dirs.py` script with your target:
+```
+PYTHONPATH=`pwd` python optimization/find_dirs.py --target_path dirs/targets/your_target.jpg --dir_name results_folder --weight_decay 3e-3 --lambda_consistency 0.6 --step 1000 --lr 0.2 --num_directions 8 --num_images 8 --data_path path_to_styleclip_latents
+```
+
+The intermediate best results for your training samples will appear under the path specified in `--dir_name`. In addition, the optimal essence vectors for all your initializations will be saved as `direction{i}.npy`, and you can use them on other images or upload them to the notebook to experiment with other sources.
+
+### Using inverted targets
+We will initialize the essence vector to be the latent of your target.
+1. Download [the inverted latents from the StyleCLIP repo](https://drive.google.com/file/d/1j7RIfmrCoisxx3t-r-KC02Qc8barBecr/view) for training.
+2. Upload your target's latent to the `dirs/tragets` folder. We use [e4e](https://github.com/omertov/encoder4editing) to invert all our images.
+3. Run the `find_dirs.py` script with your target latnet:
+
+```
+PYTHONPATH=`pwd` python optimization/find_dirs.py  --dir_initialition dirs/tragets/your_target.pt --num_directions 8  --num_images 8 --dir_name results_folder --weight_decay 3e-3 --lambda_consistency 0.6 --step 1000 --lr 0.2
+```
+
+The intermediate best results for your training samples will appear under the path specified in `--dir_name`. In addition, the optimal essence vectors for all your initializations will be saved as `direction0.npy`, which is the essence vector derived from your input latent.
+
 ## Updates:
 Pretrained directions added for Doc Brown (Back to the Future), Morgan Freeman, Beyonce, and Ariel (The Little Mermaid)!
 <p align="center">
