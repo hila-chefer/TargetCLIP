@@ -6,7 +6,6 @@ import torch
 import torchvision
 from torch import optim
 from tqdm import tqdm
-import clip
 from criteria.clip_loss import CLIPLoss
 from models.stylegan2.model import Generator
 import math
@@ -51,27 +50,34 @@ def main(args):
 
     NUM_DIRECTIONS = args.num_directions
     NUM_IMAGES = args.num_images
-    directions = [get_latent(g_ema) for _ in range(NUM_DIRECTIONS)]
 
-    directions_cat = torch.cat(directions)
+    if args.dir_initialization is None:
+        directions = [get_latent(g_ema) for _ in range(NUM_DIRECTIONS)]
+        directions_cat = torch.cat(directions)
+    else:
+        target_dir = torch.load(args.dir_initialization).reshape(1, -1, 512).detach().clone().cuda()
+        target_dir.requires_grad = True
+        directions = [target_dir]
+        directions_cat = target_dir.expand(NUM_DIRECTIONS, target_dir.shape[1], target_dir.shape[2])
+
     with torch.no_grad():
         dirs, _ = g_ema([directions_cat], input_is_latent=True, randomize_noise=False)
         for j, latent in enumerate(directions):
             torchvision.utils.save_image(dirs[j], f"{dir_name}/dir_{j}.png", normalize=True, range=(-1, 1))
 
-    latents = [None] * NUM_IMAGES
-    if args.generated_images:
-        for n in range(NUM_IMAGES):
-            with torch.no_grad():
-                latents[n] = get_latent(g_ema)
-                latents[n].requires_grad = False
-    else:
-        data = torch.load(args.data_path)
-        for n in range(NUM_IMAGES):
-            with torch.no_grad():
-                latents[n] = data[n].unsqueeze(0).cuda()
-                latents[n].requires_grad = False
-    latents = torch.cat(latents)
+        latents = [None] * NUM_IMAGES
+        if args.generated_images:
+            for n in range(NUM_IMAGES):
+                with torch.no_grad():
+                    latents[n] = get_latent(g_ema)
+                    latents[n].requires_grad = False
+        else:
+            data = torch.load(args.data_path)
+            for n in range(NUM_IMAGES):
+                with torch.no_grad():
+                    latents[n] = data[n].unsqueeze(0).cuda()
+                    latents[n].requires_grad = False
+        latents = torch.cat(latents)
 
     clip_loss = CLIPLoss(args)
     clip_loss = torch.nn.DataParallel(clip_loss)
@@ -84,10 +90,11 @@ def main(args):
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])])
 
-    if args.target_path is not None:
-        tgt_lat = None
-        # target is image from folder
-        with torch.no_grad():
+    with torch.no_grad():
+        targets_clip = None
+        if args.target_path is not None:
+            tgt_lat = None
+            # target is image from file
             img_target = Image.open(args.target_path)
             crop_size = min(img_target.size[0], img_target.size[1])
             crop = transforms.Compose([
@@ -98,23 +105,26 @@ def main(args):
                                          normalize=True, range=(-1, 1))
             target_clip = clip_loss.module.encode(img_target)
             target_clip = target_clip / target_clip.norm(dim=-1)
+            target_clip.requires_grad = False
+        else:
+            # target is latent dir
+            with torch.no_grad():
+                img_target, _ = g_ema([directions_cat], input_is_latent=True, randomize_noise=False)
+                targets_clip = clip_loss.module.encode(img_target)
+                targets_clip.requires_grad = False
 
     for dir_idx, direction in enumerate(directions):
+
+        with torch.no_grad():
+            if targets_clip is not None:
+                target_clip = targets_clip[dir_idx]
+                target_clip = target_clip / target_clip.norm(dim=-1)
 
         coefficients = [None] * NUM_IMAGES
         for n in range(NUM_IMAGES):
             coefficient = torch.ones(1).to("cuda")
             coefficient.requires_grad = True
             coefficients[n] = coefficient
-
-        if args.target_path is None:
-            # target is latent dir
-            with torch.no_grad():
-                img_target, _ = g_ema([direction], input_is_latent=True, randomize_noise=False)
-                target_clip = clip_loss.module.encode(img_target)
-                target_clip = target_clip / target_clip.norm(dim=-1)
-                tgt_lat = torch.clone(direction)
-                tgt_lat = tgt_lat.detach()
 
         opt_loss = torch.Tensor([float("Inf")]).to("cuda")
         pbar = tqdm(range(args.step))
@@ -175,15 +185,6 @@ def main(args):
                     numpy.save('{0}/direction{1}.npy'.format(args.dir_name, dir_idx),
                                direction.detach().cpu().numpy())
                     opt_loss = loss
-
-                    if tgt_lat is not None:
-                        img_gen_tgt, _ = g_ema([tgt_lat + direction], input_is_latent=True, randomize_noise=False)
-                        torchvision.utils.save_image(img_gen_tgt, f"{dir_name}/img_gen_{dir_idx}_tgt.png",
-                                                     normalize=True, range=(-1, 1))
-                        img_gen_tgt, _ = g_ema([tgt_lat - direction], input_is_latent=True, randomize_noise=False)
-                        torchvision.utils.save_image(img_gen_tgt, f"{dir_name}/img_gen_{dir_idx}_tgt_red.png",
-                                                     normalize=True, range=(-1, 1))
-
                     img_gen, _ = g_ema([latents], input_is_latent=True, randomize_noise=False)
                     direction_with_coeff = [direction * coefficients[i] for i in range(args.num_images)]
                     direction_with_coeff = torch.stack(direction_with_coeff).squeeze(1).cuda()
@@ -225,6 +226,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_directions", type=int, default=10, help="number of directions to try")
     parser.add_argument("--generated_images", default=False, action='store_true')
     parser.add_argument("--data_path", type=str, default="pretrained_models/test_faces.pt")
+    parser.add_argument("--dir_initialization", type=str, default=None)
 
     args = parser.parse_args()
 
