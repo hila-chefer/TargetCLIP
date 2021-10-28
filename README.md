@@ -12,7 +12,7 @@ We use images inverted by [e4e](https://github.com/omertov/encoder4editing).
 ## Training new directions:
 To train new directions for your own targets, use the `find_dirs.py` script under the `optimization` folder.
 
-Our code supports both targets from an images the were **not inverted** and targets for inverted images. For example, our Elsa, The Joker, Pocahontas, Keanu Reeves, and more examples were not inverted, while our Trump example was inverted.
+Our code supports both targets from images the were **not inverted** and targets for inverted images. For example, our Elsa, The Joker, Pocahontas, Keanu Reeves, and more examples were not inverted, while our Trump example was inverted.
 When possible, an inverted target usually gives better results.
 
 We recommend to use inverted images for the training process. Our experiments use [the inverted latents from the StyleCLIP repo](https://drive.google.com/file/d/1j7RIfmrCoisxx3t-r-KC02Qc8barBecr/view).
@@ -35,7 +35,7 @@ We will initialize the essence vector to be the latent of your target.
 3. Run the `find_dirs.py` script with your target latnet:
 
 ```
-PYTHONPATH=`pwd` python optimization/find_dirs.py  --dir_initialition dirs/tragets/your_target.pt --num_directions 8  --num_images 8 --dir_name results_folder --weight_decay 3e-3 --lambda_consistency 0.6 --step 1000 --lr 0.2
+PYTHONPATH=`pwd` python optimization/find_dirs.py  --dir_initialition dirs/tragets/your_target.pt --num_directions 8  --num_images 8 --dir_name results_folder --weight_decay 3e-3 --lambda_consistency 0.6 --step 1000 --lr 0.2 --data_path path_to_styleclip_latents
 ```
 
 The intermediate best results for your training samples will appear under the path specified in `--dir_name`. In addition, the optimal essence vectors for all your initializations will be saved as `direction0.npy`, which is the essence vector derived from your input latent.
