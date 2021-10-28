@@ -3,11 +3,16 @@
 This repository finds a *global direction* in StyleGAN's space to edit images according to a target image.
 We transfer the essence of a target image to any source image.
 
-## Pretrained directions notebook:
+## Pretrained directions notebooks:
+### Notebook for celebrity sources/ your own pre-inverted latents:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hila-chefer/TargetCLIP/blob/main/TargetCLIP_CLIP_guided_image_essence_transfer.ipynb)
 
 The notebook allows to use the directions on the sources presented in the examples. In addition, there's an option to edit your own inverted images with the pretrained directions, by uploading your latent vector to the `dirs` folder.
 We use images inverted by [e4e](https://github.com/omertov/encoder4editing).
+
+### Notebook for e4e+TargetCLIP (inversion and manipulation in one notebook):
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hila-chefer/TargetCLIP/blob/main/TargetCLIP%2Be4e.ipynb)
+
 
 ## Training new directions:
 To train new directions for your own targets, use the `find_dirs.py` script under the `optimization` folder.
