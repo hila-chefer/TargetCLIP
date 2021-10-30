@@ -81,6 +81,16 @@ The targets are inverted images, and the latents are used as initialization for 
   <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Trump.png">
 </p>
 
+## Citing our paper
+If you make use of our work, please cite our paper:
+```
+@article{chefer2021targetclip,
+  title={Image-Based CLIP-Guided Essence Transfer},
+  author={Chefer, Hila and Benaim, Sagie and Paiss, Roni and Wolf, Lior},
+  journal={arXiv preprint arXiv: 2110.12427},
+  year={2021}
+}
+```
 
 ### Credits
 The code in this repo draws from the [StyleCLIP](https://github.com/orpatashnik/StyleCLIP) code base. 
