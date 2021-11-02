@@ -50,9 +50,6 @@ The intermediate best results for your training samples will appear under the pa
 <p align="center">
   <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Wolverine_avatar.jpg">
 </p>
-<p align="center">
-  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/ariel_beyonce.jpg">
-</p>
 
 10/27/21: Pretrained directions added for Doc Brown (Back to the Future), Morgan Freeman, Beyonce, and Ariel (The Little Mermaid)!
 <p align="center">
