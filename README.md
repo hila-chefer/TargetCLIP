@@ -46,7 +46,7 @@ PYTHONPATH=`pwd` python optimization/find_dirs.py  --dir_initialition dirs/trage
 The intermediate best results for your training samples will appear under the path specified in `--dir_name`. In addition, the optimal essence vectors for all your initializations will be saved as `direction0.npy`, which is the essence vector derived from your input latent.
 
 ## Updates:
-11/2/21: Pretrained directions added for Wolveine, Avatar, and Gargamel!
+11/2/21: Pretrained directions added for Wolverine, Avatar, and Gargamel!
 <p align="center">
   <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Wolverine_avatar.jpg">
 </p>
