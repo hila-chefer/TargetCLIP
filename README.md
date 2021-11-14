@@ -45,26 +45,6 @@ PYTHONPATH=`pwd` python optimization/find_dirs.py  --dir_initialition dirs/trage
 
 The intermediate best results for your training samples will appear under the path specified in `--dir_name`. In addition, the optimal essence vectors for all your initializations will be saved as `direction0.npy`, which is the essence vector derived from your input latent.
 
-## Updates:
-11/12/21: New pretrained directions added for Ed Sheeran, Dumbledore, Moana, Zendaya, Thanos, and more!
-<p align="center">
-  <img height=700  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/new_directions.jpg">
-</p>
-
-11/2/21: Pretrained directions added for Wolverine, Avatar, and Gargamel!
-<p align="center">
-  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Wolverine_avatar.jpg">
-</p>
-
-10/27/21: Pretrained directions added for Doc Brown (Back to the Future), Morgan Freeman, Beyonce, and Ariel (The Little Mermaid)!
-<p align="center">
-  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/doc_brown_morgan.jpg">
-</p>
-<p align="center">
-  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/ariel_beyonce.jpg">
-</p>
-
-
 
 ## Examples:
 
@@ -90,6 +70,29 @@ The targets are inverted images, and the latents are used as initialization for 
 <p align="center">
   <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Trump.png">
 </p>
+
+## Updates:
+
+10/27/21: Pretrained directions added for Doc Brown (Back to the Future), Morgan Freeman, Beyonce, and Ariel (The Little Mermaid)!
+<p align="center">
+  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/doc_brown_morgan.jpg">
+</p>
+<p align="center">
+  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/ariel_beyonce.jpg">
+</p>
+
+11/2/21: Pretrained directions added for Wolverine, Avatar, and Gargamel!
+<p align="center">
+  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Wolverine_avatar.jpg">
+</p>
+
+11/12/21: New pretrained directions added for Ed Sheeran, Dumbledore, Moana, Zendaya, Thanos, and more!
+<p align="center">
+  <img height=700  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/new_directions.jpg">
+</p>
+
+
+
 
 ## Citing our paper
 If you make use of our work, please cite our paper:
