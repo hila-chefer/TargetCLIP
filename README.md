@@ -33,6 +33,7 @@ PYTHONPATH=`pwd` python optimization/find_dirs.py --target_path dirs/targets/you
 
 The intermediate best results for your training samples will appear under the path specified in `--dir_name`. In addition, the optimal essence vectors for all your initializations will be saved as `direction{i}.npy`, and you can use them on other images or upload them to the notebook to experiment with other sources.
 
+**Note:** for targets that require extreme or difficult semantic edits (e.g. avatar, thanos, etc.), try to increase the influence of the transfer loss using the `lambda_transfer` argument (default is set to 1).
 ### Using inverted targets
 We will initialize the essence vector to be the latent of your target.
 1. Download [the inverted latents from the StyleCLIP repo](https://drive.google.com/file/d/1j7RIfmrCoisxx3t-r-KC02Qc8barBecr/view) for training.
