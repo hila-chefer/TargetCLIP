@@ -82,9 +82,6 @@ def main(args):
 
     if not os.path.exists(dir_name):
         os.mkdir(dir_name)
-    else:
-        print(f"{dir_name} already exists")
-        return 0
 
     NUM_DIRECTIONS = args.num_directions
     NUM_IMAGES = args.num_images
