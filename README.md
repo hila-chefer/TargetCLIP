@@ -1,4 +1,4 @@
-# [ECCV 2022] TargetCLIP- official pytorch implementation of the paper [Image-Based CLIP-Guided Essence Transfer](https://arxiv.org/abs/2110.12427)
+# [ECCV 2022] TargetCLIP- Official PyTorch implementation of the paper [Image-Based CLIP-Guided Essence Transfer](https://arxiv.org/abs/2110.12427)
 
 This repository finds a *global direction* in StyleGAN's space to edit images according to a target image.
 We transfer the essence of a target image to any source image.
@@ -12,40 +12,6 @@ We use images inverted by [e4e](https://github.com/omertov/encoder4editing).
 
 ### Notebook for e4e+TargetCLIP (inversion and manipulation in one notebook):
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hila-chefer/TargetCLIP/blob/main/TargetCLIP%2Be4e.ipynb)
-
-
-## Training new directions:
-To train new directions for your own targets, use the `find_dirs.py` script under the `optimization` folder.
-
-Our code supports both targets from images the were **not inverted** and targets for inverted images. For example, our Elsa, The Joker, Pocahontas, Keanu Reeves, and more examples were not inverted, while our Trump example was inverted.
-When possible, an inverted target usually gives better results.
-
-We recommend to use inverted images for the training process. Our experiments use [the inverted latents from the StyleCLIP repo](https://drive.google.com/file/d/1j7RIfmrCoisxx3t-r-KC02Qc8barBecr/view).
-
-### Using targets that were not inverted
-The code uses `--num_directions` differnet random initializations for the essence vector. After training, you can choose your favorite one (usually, all are very similar).
-1. Download [the inverted latents from the StyleCLIP repo](https://drive.google.com/file/d/1j7RIfmrCoisxx3t-r-KC02Qc8barBecr/view) for training.
-2. Upload your target image to the `dirs/tragets` folder. Note that png images are not supported.
-3. Run the `find_dirs.py` script with your target:
-```
-PYTHONPATH=`pwd` python optimization/find_dirs.py --target_path dirs/targets/your_target.jpg --dir_name results_folder --weight_decay 3e-3 --lambda_consistency 0.6 --step 1000 --lr 0.2 --num_directions 8 --num_images 8 --data_path path_to_styleclip_latents
-```
-
-The intermediate best results for your training samples will appear under the path specified in `--dir_name`. In addition, the optimal essence vectors for all your initializations will be saved as `direction{i}.npy`, and you can use them on other images or upload them to the notebook to experiment with other sources.
-
-**Note:** for targets that require extreme or difficult semantic edits (e.g. avatar, thanos, etc.), try to increase the influence of the transfer loss using the `lambda_transfer` argument (default is set to 1).
-### Using inverted targets
-We will initialize the essence vector to be the latent of your target.
-1. Download [the inverted latents from the StyleCLIP repo](https://drive.google.com/file/d/1j7RIfmrCoisxx3t-r-KC02Qc8barBecr/view) for training.
-2. Upload your target's latent to the `dirs/tragets` folder. We use [e4e](https://github.com/omertov/encoder4editing) to invert all our images.
-3. Run the `find_dirs.py` script with your target latnet:
-
-```
-PYTHONPATH=`pwd` python optimization/find_dirs.py  --dir_initialition dirs/tragets/your_target.pt --num_directions 8  --num_images 8 --dir_name results_folder --weight_decay 3e-3 --lambda_consistency 0.6 --step 1000 --lr 0.2 --data_path path_to_styleclip_latents
-```
-
-The intermediate best results for your training samples will appear under the path specified in `--dir_name`. In addition, the optimal essence vectors for all your initializations will be saved as `direction0.npy`, which is the essence vector derived from your input latent.
-
 
 ## Examples:
 
@@ -72,25 +38,72 @@ The targets are inverted images, and the latents are used as initialization for 
   <img src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Trump.png">
 </p>
 
-## Updates:
+## Reproducing results
+### Downloading pretrained weights 
+First, please download all the pretrained weights for the experiments to the folder `pretrained_models`. If you choose to save the pretrained weights in another path, please update the config file accordingly (`configs/paths_config.py`). 
+Ours tests require downloading the [pretrained StyleGAN2 weights](https://drive.google.com/uc?id=1EM87UquaoQmk17Q8d5kYIAHqu0dkYqdT), and the [pretrained ArcFace weights](https://github.com/TreB1eN/InsightFace_Pytorch). For our encoder finetuning and optimizer initialization, please download the [e4e pretrained weights](https://drive.google.com/file/d/1cUv_reLE6k3604or78EranS7XzuVMWeO/view).
 
-10/27/21: Pretrained directions added for Doc Brown (Back to the Future), Morgan Freeman, Beyonce, and Ariel (The Little Mermaid)!
-<p align="center">
-  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/doc_brown_morgan.jpg">
-</p>
-<p align="center">
-  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/ariel_beyonce.jpg">
-</p>
+To enable alignment, run the following:
+```
+wget http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+bzip2 -dk shape_predictor_68_face_landmarks.dat.bz2
+```
 
-11/2/21: Pretrained directions added for Wolverine, Avatar, and Gargamel!
-<p align="center">
-  <img  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/Wolverine_avatar.jpg">
-</p>
+### Training the optimizer and the encoder
+#### Downloading datasets
+The targets for our celebrities test [can be found here](https://drive.google.com/drive/folders/1MdY-_lcs5l1v1MwG2mwg-p_nv_sR2oF3). 
+To train the encoder, please download the CelebA-HQ dataset (both the test set and the train set), and for the FFHQ tests, download the FFHQ set as well, and extract the first 50 images from it. 
 
-11/12/21: New pretrained directions added for Ed Sheeran, Dumbledore, Moana, Zendaya, Thanos, and more!
-<p align="center">
-  <img height=700  src="https://github.com/hila-chefer/TargetCLIP/blob/main/examples/new_directions.jpg">
-</p>
+#### Training directions with the optimizer
+Run the following command:
+
+```
+PYTHONPATH=`pwd` python optimization.py --target_path /path/to/target/image --output_folder path/to/optimizer/output  --lambda_transfer 1 --weight_decay 3e-3 --lambda_consistency 0.5 --step 1000 --lr 0.2 --num_directions 1 --num_images 4 
+```
+where `num_directions` is the number of different directions you wish to train, and `num_images` is the number of images to use in the consistency tests.
+Use the `random_initiate` parameter to initialize the direction randomly instead of the inversion of the target.
+The result manipulations on the training sources, as well as the produced essence directions will be saved under `output_folder`.
+
+#### Training the encoder from scratch
+1. Download ninja=1.10.0, using the following commands:
+```
+wget https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip
+sudo unzip ninja-linux.zip -d /usr/local/bin/
+sudo update-alternatives --install /usr/bin/ninja ninja /usr/local/bin/ninja 1 --force
+```
+2. Randomly select 200 images from the CelebsHQ train set and place them in: `data/celeba_minimized`.
+3. Randomly select 50 images from the CelebsHQ test set and place them in: `data/data1024x1024/test`.
+4. We train our encoder on 5 RTX 2080 Ti GPUs with 11 GB per each GPU. To train the encoder from scratch, run the following command:
+```
+CUDA_VISIBLE_DEVICES=0,1,2,3,4 PYTHONPATH=`pwd` python scripts/train.py --exp_dir name/of/experiment/directory --lambda_consistency 0.5 --batch_size 1 --test_batch_size 1 --lambda_reg 3e-3 --checkpoint_path pretrained_models/e4e_ffhq_encode.pt --image_interval 1 --board_interval 5 --val_interval 31 --dataset_type celeba_encode_minimized --save_interval 200 --max_steps 3000
+
+```
+If you wish to train the encoder with a single GPU, please remove the use of `DataParallel` in the coach file (`training/coach`).
+The best checkpoint will be saved to `name/of/experiment/directory/checkpoints`.
+
+**Important: Please make sure to download the pretrained [e4e weights](https://drive.google.com/file/d/1cUv_reLE6k3604or78EranS7XzuVMWeO/view) before training in order to enable the finetuning.**
+
+### Producing quantitative results (id scores, semantic scores)
+1. The latents for our 68 sources are saved under `pretrained_weights/celebs.pt`.
+2. Use your method to produce a manipulation for each source, target, and save the manipulation results under a folder with the baseline name.
+ The naming convention our tests expect is: `{target_name}/{source_idx}.png` for example, the manipulation for ariel with source number 1 will be saved as: `{baseline_name}/ariel/1.png`.
+3. Produce results by running the following command:
+```
+PYTHONPATH=`pwd` python ./experiments/calc_metrics.py --style_img_path /path/to/target/images --manipulations_path /output/folder --input_img_path /path/to/source/images
+```
+where `style_img_path` is the path to the target images, `manipulations_path` is the path to the results of the manipulations, and `input_img_path` is the path to the 68 source images.
+
+**Important: Please note that our optimizer also finds coefficients per source. In our experiments, we found that a 1.2 coefficient is usually the average coefficient for the targets, thus we used it for manipulation with new sources (for both celebrities and FFHQ experiments).**
+
+## Producing FID
+To run the FID test, follow these steps:
+1. [Install the FID calculation package](https://github.com/mseitzer/pytorch-fid).
+2. Extract a random subset of size 7000 from the FFHQ test set.
+3. For each target name, the folder `{baseline}/target_name` needs to be compared to the subset of FFHQ:
+```
+python -m pytorch_fid --device cuda:{gpu_device} /path/to/FFHQ /outdir/target_name
+```
+4. Calculate the average and standard deviation across the FID scores of all targets.
 
 
 
@@ -107,4 +120,4 @@ If you make use of our work, please cite our paper:
 ```
 
 ### Credits
-The code in this repo draws from the [StyleCLIP](https://github.com/orpatashnik/StyleCLIP) code base. 
+The code in this repo draws from the [StyleCLIP](https://github.com/orpatashnik/StyleCLIP), [e4e](https://github.com/omertov/encoder4editing) code bases. 
